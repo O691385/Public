@@ -4,7 +4,7 @@ from utils.data_loading import create_tracking_plan
 import os
 
 tracking_table = os.environ.get('SUPABASE_TRACKING_TABLE')
-def tracking_plan(system_prompt_tracking, user_prompt_tracking, system_prompt_directorDA, llm_model, supabase):
+def tracking_plan(system_prompt_tracking, user_prompt_tracking, system_prompt_directorDA, llm_model, fast_llm_model, supabase):
     """
     Generate a tracking plan for a given feature, customer type, additional details, and PRD text.
 
@@ -50,8 +50,8 @@ def tracking_plan(system_prompt_tracking, user_prompt_tracking, system_prompt_di
                     st.session_state['history'].append({'role': 'user', 'content': draft_plan})
                     status_message = "Draft tracking Done. Reviewing the plan..."
                     st.info(status_message)
-                    llm_model.system_prompt = system_prompt_directorDA
-                    critique_response, input_tokens, output_tokens = llm_model.generate_text(
+                    fast_llm_model.system_prompt = system_prompt_directorDA
+                    critique_response, input_tokens, output_tokens = fast_llm_model.generate_text(
                         prompt = f"Critique the Tracking Plan: {draft_plan}. Only respond in Markdown format. BE DETAILED. If you think user is not asking for tracking plan return nothing.\n Context: ### PRD \n {prd_text} \n ### Feature Name \n {feature_name} \n ### Additional Details \n {other_details} ",
                         temperature=0.3
                     )
