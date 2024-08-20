@@ -1,6 +1,6 @@
 # PM Toolkit
 
-PM Toolkit is a comprehensive Streamlit application designed to assist Product Managers with various tasks, including creating and improving Product Requirements Documents (PRDs), brainstorming features, generating tracking plans, creating Go-To-Market (GTM) plans, and analyzing A/B/C test results.
+PM Toolkit is a comprehensive Streamlit application designed to assist Product Managers with various tasks, including creating and improving Product Requirements Documents (PRDs), brainstorming features, generating tracking plans, creating Go-To-Market (GTM) plans, and analyzing A/B test results.
 
 ## Features
 
@@ -9,8 +9,9 @@ PM Toolkit is a comprehensive Streamlit application designed to assist Product M
 3. **Brainstorm Features**: Engage in an interactive brainstorming session for new product features.
 4. **Tracking Plan**: Generate a detailed tracking plan for your product or feature.
 5. **Create GTM Plan**: Develop a Go-To-Market plan based on your PRD and additional details.
-6. **A/B/C Test Significance**: Analyze and interpret the results of A/B/C tests.
-7. **View History**: Access and review previously generated PRDs and plans.
+6. **A/B Test Significance**: Analyze and interpret the results of A/B tests.
+7. **A/B Test Duration Calculator**: Calculate the duration needed for an A/B test.
+8. **View History**: Access and review previously generated PRDs and plans.
 
 ## Installation
 
