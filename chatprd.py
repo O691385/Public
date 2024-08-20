@@ -70,16 +70,40 @@ def main():
             ],
         )
         
+        # Function calls based on user selection
         if option == "Create PRD":
-            create_prd(system_prompt_prd_experimental, system_prompt_director, claude_llm, gpt4_llm, supabase)
+            create_prd(
+                system_prompt_prd_experimental,
+                system_prompt_director,
+                claude_llm,
+                gpt4_llm,
+                supabase
+            )
         elif option == "Improve PRD":
-            improve_prd(system_prompt_prd_experimental, system_prompt_director, claude_llm, supabase)
+            improve_prd(
+                system_prompt_prd_experimental,
+                system_prompt_director,
+                claude_llm,
+                supabase
+            )
         elif option == "Brainstorm Features":
             brainstorm_features(system_prompt_brainstorm, gpt4_llm, supabase)
         elif option == "Tracking Plan":
-            tracking_plan(system_prompt_tracking, user_prompt_tracking, system_prompt_directorDA, claude_llm, gpt4_llm, supabase)
+            tracking_plan(
+                system_prompt_tracking,
+                user_prompt_tracking,
+                system_prompt_directorDA,
+                claude_llm,
+                gpt4_llm,
+                supabase
+            )
         elif option == "Create GTM Plan":
-            gtm_planner(system_prompt_GTM, system_prompt_GTM_critique, gpt4_llm, claude_llm)
+            gtm_planner(
+                system_prompt_GTM,
+                system_prompt_GTM_critique,
+                gpt4_llm,
+                claude_llm
+            )
         elif option == "A/B Test Significance":
             abc_test_significance(claude_llm, system_prompt_ab_test)
         elif option == "A/B Test Duration Calculator":
