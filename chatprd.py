@@ -31,12 +31,27 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def main():
     """
-    Main function that serves as the entry point of the program.
-    
-    This function loads prompts, builds models, and presents a menu of options to the user based on their selection.
-    The user can choose to create a PRD, improve a PRD, brainstorm features, create a tracking plan, create a GTM plan, or view history.
-    Each option calls a specific function to perform the corresponding task.
+    Main function that serves as the entry point of the Streamlit application.
+
+    This function performs the following tasks:
+    1. Loads system prompts from a JSON file.
+    2. Builds language models (Claude and GPT-4) using the utility function `build_models`.
+    3. Sets up system prompts for various tasks such as PRD creation, brainstorming, tracking plans, GTM plans, and A/B testing.
+    4. Authenticates the user using Supabase.
+    5. Displays a sidebar menu for the user to select a task.
+    6. Calls the appropriate function based on the user's selection:
+       - "Create PRD": Calls `create_prd` to generate a new Product Requirements Document.
+       - "Improve PRD": Calls `improve_prd` to enhance an existing PRD.
+       - "Brainstorm Features": Calls `brainstorm_features` for feature brainstorming.
+       - "Tracking Plan": Calls `tracking_plan` to generate a tracking plan.
+       - "Create GTM Plan": Calls `gtm_planner` to develop a Go-To-Market plan.
+       - "A/B Test Significance": Calls `abc_test_significance` to analyze A/B test results.
+       - "A/B Test Duration Calculator": Calls `ab_test_duration_calculator` to calculate the duration needed for an A/B test.
+       - "View History": Calls `view_history` to access and review previously generated PRDs and plans.
+
+    The function also initializes Streamlit's session state to store temporary memory and ensures that the user is authenticated before accessing the toolkit features.
     """
+   
     prompts = load_prompts()
     claude_llm, gpt4_llm = build_models()
     system_prompt_prd_experimental = prompts['system_prompt_prd_experimental']

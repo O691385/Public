@@ -10,8 +10,7 @@ PM Toolkit is a comprehensive Streamlit application designed to assist Product M
 4. **Tracking Plan**: Generate a detailed tracking plan for your product or feature.
 5. **Create GTM Plan**: Develop a Go-To-Market plan based on your PRD and additional details.
 6. **A/B Test Significance**: Analyze and interpret the results of A/B tests.
-7. **A/B Test Duration Calculator**: Calculate the duration needed for an A/B test.
-8. **View History**: Access and review previously generated PRDs and plans.
+7. **View History**: Access and review previously generated PRDs and plans.
 
 ## Installation
 
@@ -38,7 +37,6 @@ PM Toolkit is a comprehensive Streamlit application designed to assist Product M
 ## Usage
 
 Run the Streamlit app:
-
 ```
 streamlit run chatprd.py
 ```
@@ -48,30 +46,16 @@ Navigate through the sidebar to access different features of the PM Toolkit.
 ## Project Structure
 
 - `chatprd.py`: Main Streamlit application entry point
-- `features.py`: Contains implementations for various features (Create PRD, Improve PRD, etc.)
+- `features/`: Contains implementations for various features (Create PRD, Improve PRD, etc.)
 - `models.py`: Handles the initialization and configuration of AI models
-- `storage.py`: Manages database operations with Supabase
-- `utils.py`: Utility functions for data loading, audio processing, etc.
-- `api/llm/`: Contains wrappers for different AI models (OpenAI, Groq, Anthropic)
+- `storage/`: Manages database operations with Supabase
+- `utils/`: Utility functions for data loading, audio processing, etc.
+- `api/`: Contains API-related files and wrappers for different AI models (OpenAI, Groq, Anthropic)
 - `prompts.json`: Stores system prompts for different features
 
-## Dependencies
+## API
 
-- streamlit
-- openai
-- pandas
-- numpy
-- scipy
-- llm
-- groq
-- Pillow
-- anthropic
-- ffmpeg
-- yt-dlp
-- supabase
-- PyJWT
-- streamlit-cookies-controller
-- extra-streamlit-components
+The project includes a FastAPI-based API for text generation and other AI-related tasks. The main API file is located at `api/main.py`.
 
 ## Authentication
 
