@@ -1,6 +1,6 @@
 import os
 from supabase import create_client, Client
-import streamlit as st
+import streamlit as st 
 
 # Initialize Supabase client
 def init_supabase():
