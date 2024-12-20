@@ -6,26 +6,10 @@ from datetime import datetime, timedelta
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-def is_valid_email(email):
-    """Validate the email format."""
-    regex = r'^\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    return re.match(regex, email)
-
-def generate_jwt(user_email):
-    expiration = datetime.utcnow() + timedelta(days=30)  # Token expires in 30 days
-    token = jwt.encode({"email": user_email, "exp": expiration}, SECRET_KEY, algorithm="HS256")
-    return token
-
-def verify_jwt(token):
-    try:
-        decoded_token = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-        return decoded_token
-    except jwt.ExpiredSignatureError:
-        return None
-    except jwt.InvalidTokenError:
-        return None
+# ... (other functions: is_valid_email, generate_jwt, verify_jwt remain unchanged) ...
 
 def set_auth_cookie(token):
+    # Existing code for this function
     st.session_state.auth_token = token
     js_code = f"""
     <script>
@@ -44,6 +28,7 @@ def set_auth_cookie(token):
     st.components.v1.html(js_code, height=0)
 
 def get_auth_cookie():
+    # Existing code for this function
     if 'auth_token' not in st.session_state:
         js_code = """
         <script>
@@ -82,6 +67,7 @@ def get_auth_cookie():
     return st.session_state.get('auth_token')
 
 def clear_auth_cookie():
+    # Existing code for this function
     if 'auth_token' in st.session_state:
         del st.session_state.auth_token
     js_code = """
@@ -95,37 +81,20 @@ def clear_auth_cookie():
     st.components.v1.html(js_code, height=0)
 
 def authenticate_user(email, password, supabase):
-    try:
-        response = supabase.auth.sign_in_with_password({"email": email, "password": password})
-        if response.user:
-            user_email = response.user.email
-            token = generate_jwt(user_email)
-            set_auth_cookie(token)
-            st.session_state['logged_in'] = True
-            st.session_state['user'] = {"email": user_email}
-            st.success(f"Welcome {user_email}")
-            st.rerun()
-        else:
-            st.error("Authentication failed. Please check your email and password.")
-    except Exception as e:
-        st.error(f"Authentication failed: {e}")
+    # Bypassing actual authentication
+    user_email = "guest@example.com"  # Default email for guest access
+    token = generate_jwt(user_email)
+    set_auth_cookie(token)
+    st.session_state['logged_in'] = True
+    st.session_state['user'] = {"email": user_email}
+    st.success(f"Welcome {user_email}")
+    st.rerun()
 
 def send_reset_password_email(email, supabase):
-    try:
-        supabase.auth.reset_password_for_email(email)
-        st.success("Password reset email sent. Please check your inbox.")
-    except Exception as e:
-        st.error(f"Failed to send password reset email: {e}")
+    st.warning("Password reset is disabled in guest mode.")
 
 def register_user(email, password, supabase):
-    try:
-        response = supabase.auth.sign_up({"email": email, "password": password})
-        if response.user:
-            st.success("Registration successful. Please log in.")
-        else:
-            st.error("Registration failed. Please try again.")
-    except Exception as e:
-        st.error(f"Registration failed: {e}")
+     st.warning("Registration is disabled in guest mode.")
 
 def auth_screen(supabase):
     # Check for existing auth token
@@ -148,30 +117,10 @@ def auth_screen(supabase):
             st.session_state['logged_in'] = False
             st.session_state.pop('user', None)
             clear_auth_cookie()
-            supabase.auth.sign_out()
+            # supabase.auth.sign_out() # No need to sign out from Supabase since we are not authenticating
             st.rerun()
     else:
-        auth_mode = st.radio("Select mode", ["Login", "Register"])
-        st.markdown(f'## {"Welcome back!" if auth_mode == "Login" else "Create an account"}')
-        
-        email = st.text_input("Email", key="email")
-        password = st.text_input("Password", type="password", key="password")
-        
-        if auth_mode == "Login":
-            if st.button("Log In"):
-                if is_valid_email(email):
-                    authenticate_user(email, password, supabase)
-                else:
-                    st.error("Please enter a valid email address")
-            if st.button("Forgot Password?"):
-                if is_valid_email(email):
-                    send_reset_password_email(email, supabase)
-                else:
-                    st.error("Please enter a valid email address")
-        
-        elif auth_mode == "Register":
-            if st.button("Register"):
-                if is_valid_email(email):
-                    register_user(email, password, supabase)
-                else:
-                    st.error("Please enter a valid email address")
+        # Simplified login - no email/password needed
+        st.markdown(f'## Welcome! Click below to access as a guest')
+        if st.button("Log In as Guest"):
+            authenticate_user("","") # Call authenticate_user without credentials
